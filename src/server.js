@@ -36,13 +36,12 @@ export const startServer = () => {
     });
   });
 
-  app.get('/contacts/:contactId', async (req, res, next) => {
+  app.get('/contacts/:contactId', async (req, res) => {
     const { contactId } = req.params;
     const contact = await getContactById(contactId);
 
     if (!contact) {
-      res.status(404).json({ message: 'Contact not found' });
-      return;
+      return res.status(404).json({ message: 'Contact not found' });
     }
 
     res.status(200).json({
@@ -52,7 +51,7 @@ export const startServer = () => {
     });
   });
 
-  app.use('*', (req, res, next) => {
+  app.use('*', (req, res) => {
     res.status(404).json({
       message: 'Not found',
     });
